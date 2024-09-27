@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 
 import useConfig from '../hooks/useConfig';
@@ -19,14 +19,15 @@ function HomePage() {
   const { config, setQuote, setType, setMemo, setIDs } = useConfig();
   const { editor, setSvg, setFile } = useEditor();
   const { transformer, transform, clear } = useTransformer();
+  const [name, setName] = useState('');
 
   useEffect(() => {
     if (editor.svg) {
-      transform(editor.svg, config);
+      transform(editor.svg, config, name); // Gọi transform với name
     } else {
       clear();
     }
-  }, [config.jsxSingleQuote, config.type, config.cleanupIDs, config.memo, editor.svg]);
+  }, [config.jsxSingleQuote, config.type, config.cleanupIDs, config.memo, editor.svg, name]); // Thêm name vào danh sách phụ thuộc
 
   return (
     <Layout>
@@ -43,8 +44,22 @@ function HomePage() {
         onChangeIDs={setIDs}
         onChangeMemo={setMemo}
       />
+  <input 
+    type="text" 
+    value={name} 
+    onChange={(e) => setName(e.target.value)} 
+    placeholder="Enter your name"
+    style={{
+      width: 'auto',
+      height: '40px',
+      padding: '10px',
+      margin: '0',
+      fontSize: '16px'
+    }}
+  />
 
-      <Playground svg={editor.svg} jsx={transformer.jsx} onDrop={setFile} onChange={setSvg} />
+
+      <Playground svg={editor.svg} jsx={transformer.jsx} onDrop={setFile} onChange={setSvg} name={name} />
     </Layout>
   );
 }

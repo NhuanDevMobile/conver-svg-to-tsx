@@ -22,7 +22,7 @@ interface IHeader {
 }
 
 const Header = styled.header<IHeader>`
-  padding: 15px 25px;
+  padding: 25px 40px;
   transition: 300ms linear;
   border-bottom: 2px solid ${color.black};
   background-size: 300% 100%;
@@ -31,6 +31,7 @@ const Header = styled.header<IHeader>`
 
 const TextLogo = styled(Text)`
   margin: 0 0 0 7px;
+    font-size: 40px;
 `;
 
 const TextStar = styled(Text)`
@@ -42,18 +43,12 @@ function NavBar({ variant }: INavBar) {
     <Header variant={variant}>
       <Grid columns="auto auto">
         <GridCell>
-          <Link href="/">
+        <Link href="https://nhuandev.com" passHref>
             <IconLogo />
-            <TextLogo fontWeight="bold">SVG 2 JSX</TextLogo>
+            <TextLogo fontWeight="bold">NHUAN DEV</TextLogo>
           </Link>
         </GridCell>
-        <GridCell>
-          <Link href="https://github.com/balajmarius/svg2jsx" target="_blank">
-            <IconStar />
-            <TextStar>Star on</TextStar>
-            <IconGithub />
-          </Link>
-        </GridCell>
+      
       </Grid>
     </Header>
   );

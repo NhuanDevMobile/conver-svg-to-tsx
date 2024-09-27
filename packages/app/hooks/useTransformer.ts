@@ -18,7 +18,7 @@ export default function useTransformer() {
     variant: VariantType.CLEAR,
   });
 
-  async function transform(svg: string, config: ConfigType): Promise<void> {
+  async function transform(svg: string, config: ConfigType, name: string): Promise<void> {
     try {
       setTransformer({
         loading: true,
@@ -27,8 +27,32 @@ export default function useTransformer() {
         svg,
         config,
       });
+      const iconName = name || 'Icon'; // Nếu name là chuỗi rỗng, sử dụng "Icon"
+
+      const replacements = [
+        {
+          oldValue: 'function Icon() {',
+          newValue: `export const ${iconName} = (props: SVGProps<SVGSVGElement>) => {`,
+        },
+        { oldValue: 'export default Icon;', newValue: '' },
+        {
+          oldValue: 'import React from "react";',
+          newValue: "import type { SVGProps } from 'react';",
+        },
+
+        // Thêm nhiều cặp khác nếu cần
+      ];
+
+      let modifiedJsx = data.jsx;
+
+      // Thực hiện thay thế
+      replacements.forEach(({ oldValue, newValue }) => {
+        const escapedOldValue = oldValue.replace(/[-\/\\^$.*+?()[\]{}|]/g, '\\$&'); // Thoát ký tự đặc biệt
+        modifiedJsx = modifiedJsx.replace(new RegExp(escapedOldValue, 'g'), newValue);
+      });
+
       setTransformer({
-        jsx: data.jsx,
+        jsx: modifiedJsx,
         variant: VariantType.SUCCESS,
       });
     } catch {
