@@ -33,6 +33,12 @@ const TextLogo = styled(Text)`
   margin: 0 0 0 7px;
     font-size: 40px;
 `;
+const StyledLink = styled.a`
+  display: flex;
+  align-items: center; // Căn giữa theo chiều dọc
+  text-decoration: none; // Bỏ gạch chân
+`;
+
 
 const TextStar = styled(Text)`
   margin: 0 5px 0 7px;
@@ -43,10 +49,10 @@ function NavBar({ variant }: INavBar) {
     <Header variant={variant}>
       <Grid columns="auto auto">
         <GridCell>
-        <Link href="https://nhuandev.com" passHref>
-            <IconLogo />
-            <TextLogo fontWeight="bold">NHUAN DEV</TextLogo>
-          </Link>
+        <StyledLink href="https://nhuandev.com" target="_blank" rel="noopener noreferrer">
+  <IconLogo />
+  <TextLogo fontWeight="bold">NHUAN DEV</TextLogo>
+</StyledLink>
         </GridCell>
       
       </Grid>
